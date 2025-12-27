@@ -1,7 +1,16 @@
-{
-  "id": 1,
-  "description": "Learn LLM",
-  "status": "todo",
-  "createdAt": "2025-12-28T02:02:59.958137",
-  "updatedAt": "2025-12-28T02:02:59.958137"
-}
+[
+  {
+    "id": 1,
+    "description": "Learn LLM",
+    "status": "todo",
+    "createdAt": "2025-12-28T02:29:27.874633",
+    "updatedAt": "2025-12-28T02:29:27.874633"
+  },
+  {
+    "id": 2,
+    "description": "Go for hiking",
+    "status": "todo",
+    "createdAt": "2025-12-28T02:29:52.521672",
+    "updatedAt": "2025-12-28T02:29:52.521672"
+  }
+]

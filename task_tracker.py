@@ -22,24 +22,47 @@ def _init_storage():
             json.dump([], f, ensure_ascii=False, indent=2)
         print("Storage initialized")
     
+def load_tasks():
+    try:
+        with open(TASKS_FILE, 'r') as file:
+            tasks_list = json.load(file)
+        if isinstance(tasks_list, list):
+            print("Successfully read the JSON file into a Python list:")
+            print(tasks_list)
+            print(f"Type of the result: {type(tasks_list)}")
+            return tasks_list
+        else:
+            print(f"Error: The JSON file did not contain a list (it was a {type(tasks_list).__name__}).")
+
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {e}")
+    except IOError as e:
+        print(f"Error reading file: {e}")
 
 
 def add_task(task_description):
-    """
-    - checks if a json file exists
-        - if, yes then create a task and adds to json fie
-        - else, creates a file and adds the task to that file.
-    """
-    global task_id
     try:
         _init_storage()
-        t = Task(task_id, task_description)
-        print(t)
-        t = t.to_dict()
-        with open(TASKS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(t, f, ensure_ascii=False, indent=2)
-        print(f"Task added successfully (ID: {t.id})")
-        task_id += 1
+        new_id = 1
+        tasks_lst = load_tasks()
+        if len(tasks_lst) == 0:
+            t = Task(new_id, task_description)
+            t = t.to_dict()
+            tasks_lst.append(t)
+            with open(TASKS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(tasks_lst, f, indent=2)
+        else:
+            last_task_id = tasks_lst[-1]["id"]
+            new_id = last_task_id+1
+            t = Task(new_id, task_description)
+            t = t.to_dict()
+            tasks_lst.append(t)
+            with open(TASKS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(tasks_lst, f, indent=2)
+        
+        print(f"Task added successfully: (ID: {new_id})")
     except Exception as e:
-        print(f"Error occured adding a task: {e}")
+        print(f"Error adding task - {task_description: {e}}")
+            
+    
     
