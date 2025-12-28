@@ -47,6 +47,21 @@ def main():
                 delete_task(task_id=task_id)
         except Exception as e:
             print(f"Error while calling the delete_task method: {e}")
+    elif len(sys.argv) == 3 and "mark" in sys.argv[1]:
+        try:
+            status = sys.argv[1]
+            task_id = sys.argv[-1]
+            print(f"\n User asks for updating the progress of task {task_id}..")
+            update_progress(task_id=task_id, raw_status=status)
+        except Exception as e:
+            print(f"Error while calling the update_progress  method: {e}")
+    elif len(sys.argv) == 2 and sys.argv[-1] == "list":
+        try:
+            print(f"\n User asks for displaying all the tasks..")
+            get_tasks()
+        except Exception as e:
+            print(f"Error while calling the method get_tasks: {e}")
+            
     else:
         print("\n User asks for other actions...")
         

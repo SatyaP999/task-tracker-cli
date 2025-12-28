@@ -130,3 +130,64 @@ def delete_task(task_id):
         print(f"Error deleting task (ID: {task_id}): {e}")
     
     
+def update_progress(task_id, raw_status):
+    try:
+        _init_storage()
+        tasks_lst = load_tasks()
+        num_of_tasks = len(tasks_lst)
+        task_found = False
+        if num_of_tasks == 0:
+            print("There are no tasks to update the progress.")
+            return
+        
+        if not(task_id.isnumeric()):
+            print("Please enter a valid task id to update the progress. Task id should be numeric")
+            return
+            
+        if len(raw_status) == 0:
+            print("Status should not be empty. Please enter a valid status.")
+            return
+        
+        status_lst = raw_status.split("-")
+        status = ""
+        if len(status_lst) == 3:
+            status += status_lst[-2] + "-" + status_lst[-1]
+        elif len(status_lst) == 2:
+            status += status_lst[-1]
+        
+        for task in tasks_lst:
+            if task_id == str(task["id"]):
+                task["status"] = status
+                task["updatedAt"] = datetime.now().isoformat()
+                task_found = True
+                break
+        
+        if not(task_found):
+            print(f"Task with ID: {task_id} is not found. Please enter a valida task id for updation of progress.")
+        else:
+            with open(TASKS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(tasks_lst, f, indent=2)
+            print(f"\n Task (ID: {task_id}) progress has been updated.")
+    except Exception as e:
+        print(f"Error updating the progress of task (ID: {task_id}): {e}")
+
+
+def get_tasks():
+    try:
+        _init_storage()
+        tasks_lst = load_tasks()
+        num_of_tasks = len(tasks_lst)
+        
+        if num_of_tasks == 0:
+            print("There are no tasks to be displayed.")
+            return
+        print("\n", "="*80)
+        for task in tasks_lst:
+            print(f"[{task['id']}] {task['description']}")
+            print(f"Status: {task['status'].upper()} | Created: {task['createdAt'][:10]}")
+            print("-" * 40)
+        print("\n", "="*80)
+    except Exception as e:
+        print(f"Error listing out all the tasks: {e}")
+            
+        

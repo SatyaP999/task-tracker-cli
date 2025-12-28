@@ -2,8 +2,15 @@
   {
     "id": 2,
     "description": "Go for hiking",
-    "status": "todo",
+    "status": "done",
     "createdAt": "2025-12-28T02:29:52.521672",
-    "updatedAt": "2025-12-28T02:29:52.521672"
+    "updatedAt": "2025-12-28T19:58:35.761392"
+  },
+  {
+    "id": 3,
+    "description": "Buy groceries",
+    "status": "todo",
+    "createdAt": "2025-12-28T22:40:40.692208",
+    "updatedAt": "2025-12-28T22:40:40.692208"
   }
 ]
