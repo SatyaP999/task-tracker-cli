@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from datetime import datetime
 from task import Task
 
 TASKS_FILE = Path("tasks.json")
@@ -28,8 +29,8 @@ def load_tasks():
             tasks_list = json.load(file)
         if isinstance(tasks_list, list):
             print("Successfully read the JSON file into a Python list:")
-            print(tasks_list)
-            print(f"Type of the result: {type(tasks_list)}")
+            # print(tasks_list)
+            # print(f"Type of the result: {type(tasks_list)}")
             return tasks_list
         else:
             print(f"Error: The JSON file did not contain a list (it was a {type(tasks_list).__name__}).")
@@ -63,6 +64,40 @@ def add_task(task_description):
         print(f"Task added successfully: (ID: {new_id})")
     except Exception as e:
         print(f"Error adding task - {task_description: {e}}")
+        
+def update_task(task_id, task_description):
+    try:
+        _init_storage()
+        tasks_lst = load_tasks()
+        num_of_tasks = len(tasks_lst)
+        task_found = False
+        if num_of_tasks == 0:
+            print("There are no tasks to be updated. Please add a task")
+            return
+        
+        if not(task_id.isnumeric()):
+            print("Please enter a valid task id to update. Task id should be numeric")
+            return
+        
+        if len(task_description) == 0:
+            print("Task description should not be empty. Please enter a valid task description to update.")
+            return
+        
+        for i in range(num_of_tasks):
+            if task_id == str(tasks_lst[i]["id"]):
+                tasks_lst[i]["description"] = task_description
+                tasks_lst[i]["updatedAt"] = datetime.now().isoformat()
+                task_found = True
+                break
+        if not(task_found):
+            print(f"Task with ID: {task_id} is not found. Please enter a valida task id for updation.")
+        else:
+            with open(TASKS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(tasks_lst, f, indent=2)
+        
+            print(f"\n Task (ID: {task_id}) updated to {task_description}")
+    except Exception as e:
+        print(f"Error updating task (ID: {task_id}): {e}")
             
     
     

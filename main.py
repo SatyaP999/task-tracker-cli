@@ -1,7 +1,7 @@
 
 #!/usr/bin/env python3
 import sys
-from task_tracker import add_task
+from task_tracker import *
 def main():
     # print(sys.argv)
     # print(f"\n {type(sys.argv)}")
@@ -26,6 +26,17 @@ def main():
                 add_task(task_description=task_desc)
         except Exception as e:
             print(f"Error while calling the add_task method: {e}")
+    elif "update" in sys.argv:
+        try:
+            if len(sys.argv) < 4:
+                print("Error: Please provide task id and/or task description.")
+            else:
+                task_desc = sys.argv[-1]
+                task_id = sys.argv[-2]
+                print(f"\n User asks for updating a task {task_desc}..")
+                update_task(task_id=task_id, task_description=task_desc)
+        except Exception as e:
+            print(f"Error while calling the update_task method: {e}")
     else:
         print("\n User asks for other actions...")
         
