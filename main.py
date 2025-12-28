@@ -37,6 +37,16 @@ def main():
                 update_task(task_id=task_id, task_description=task_desc)
         except Exception as e:
             print(f"Error while calling the update_task method: {e}")
+    elif "delete" in sys.argv:
+        try:
+            if len(sys.argv) < 3:
+                print("Error: Please provide task id and/or task id.")
+            else:
+                task_id = sys.argv[-1]
+                print(f"\n User asks for deleting task {task_id}..")
+                delete_task(task_id=task_id)
+        except Exception as e:
+            print(f"Error while calling the delete_task method: {e}")
     else:
         print("\n User asks for other actions...")
         

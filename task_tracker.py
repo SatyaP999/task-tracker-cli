@@ -99,5 +99,34 @@ def update_task(task_id, task_description):
     except Exception as e:
         print(f"Error updating task (ID: {task_id}): {e}")
             
+
+def delete_task(task_id):
+    try:
+        _init_storage()
+        tasks_lst = load_tasks()
+        num_of_tasks = len(tasks_lst)
+        task_found = False
+        if num_of_tasks == 0:
+            print("There are no tasks to delete.")
+            return
+        
+        if not(task_id.isnumeric()):
+            print("Please enter a valid task id to delete. Task id should be numeric")
+            return
+            
+        for task in tasks_lst:
+            if task_id == str(task["id"]):
+                tasks_lst.remove(task)
+                task_found = True
+                break
+        
+        if not(task_found):
+            print(f"Task with ID: {task_id} is not found. Please enter a valida task id for deletion.")
+        else:
+            with open(TASKS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(tasks_lst, f, indent=2)
+            print(f"\n Task (ID: {task_id}) deleted.")
+    except Exception as e:
+        print(f"Error deleting task (ID: {task_id}): {e}")
     
     
