@@ -61,6 +61,14 @@ def main():
             get_tasks()
         except Exception as e:
             print(f"Error while calling the method get_tasks: {e}")
+    
+    elif len(sys.argv) == 3 and sys.argv[1] == "list":
+        try:
+            print(f"\n User asks for displaying all the tasks by status..")
+            status = sys.argv[-1]
+            get_tasks_by_ststus(status)
+        except Exception as e:
+            print(f"Error while calling the method get_tasks_by_status: {e}")
             
     else:
         print("\n User asks for other actions...")

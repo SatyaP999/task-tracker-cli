@@ -9,8 +9,8 @@
   {
     "id": 3,
     "description": "Buy groceries",
-    "status": "todo",
+    "status": "in-progress",
     "createdAt": "2025-12-28T22:40:40.692208",
-    "updatedAt": "2025-12-28T22:40:40.692208"
+    "updatedAt": "2025-12-28T22:57:08.066574"
   }
 ]

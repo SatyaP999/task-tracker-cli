@@ -190,4 +190,32 @@ def get_tasks():
     except Exception as e:
         print(f"Error listing out all the tasks: {e}")
             
+def get_tasks_by_ststus(status):
+    try:
+        _init_storage()
+        tasks_lst = load_tasks()
+        num_of_tasks = len(tasks_lst)
+
+        if num_of_tasks == 0:
+            print("There are no tasks to be displayed.")
+            return
+        
+        if status not in ["todo", "in-progress", "done"]:
+            print("Please enter a valid status. Status must be one of these (todo, in-progress, done).")
+            return
+        
+        cnt = 0
+        print("\n", "="*80)
+        for task in tasks_lst:
+            if task["status"].lower() == status.lower(): 
+                print(f"[{task['id']}] {task['description']}")
+                print(f"Status: {task['status'].upper()} | Created: {task['createdAt'][:10]}")
+                print("-" * 40)
+                cnt += 1
+        
+        if cnt == 0:
+            print(f"There are no tasks with the status: {status}")
+        print("\n", "="*80)
+    except Exception as e:
+        print(f"Error listing out all the tasks by status: {e}")
         
